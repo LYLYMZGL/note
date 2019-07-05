@@ -22,3 +22,5 @@
 
 [错误消息处理、数据校验](https://github.com/LYLYMZGL/note/blob/master/%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C.md)
 
+[SpringMVC通过Ajax处理json数据](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E9%80%9A%E8%BF%87Ajax%E5%A4%84%E7%90%86json%E6%95%B0%E6%8D%AE.md)
+
