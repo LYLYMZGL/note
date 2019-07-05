@@ -24,3 +24,4 @@
 
 [SpringMVC通过Ajax处理json数据](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E9%80%9A%E8%BF%87Ajax%E5%A4%84%E7%90%86json%E6%95%B0%E6%8D%AE.md)
 
+[SpringMVC实现文件上传](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.md)
