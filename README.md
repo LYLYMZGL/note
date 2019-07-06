@@ -1,5 +1,6 @@
 该仓库存放技术笔记 <br/>
 目录如下：<br/>
+# 1、SpringMVC
 [SpringMVC之环境搭建](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
 
 [SpringMVC之RequestMapping映射](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E4%B9%8BRequestMapping%E6%98%A0%E5%B0%84.md)
@@ -27,3 +28,5 @@
 [SpringMVC实现文件上传](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.md)
 
 [拦截器](https://github.com/LYLYMZGL/note/blob/master/%E6%8B%A6%E6%88%AA%E5%99%A8.md)
+
+[ExceptionHandler和ResponseStatus异常处理](https://github.com/LYLYMZGL/note/blob/master/ExceptionHandler%E5%92%8CResponseStatus%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.md)
