@@ -30,3 +30,5 @@
 [拦截器](https://github.com/LYLYMZGL/note/blob/master/%E6%8B%A6%E6%88%AA%E5%99%A8.md)
 
 [ExceptionHandler和ResponseStatus异常处理](https://github.com/LYLYMZGL/note/blob/master/ExceptionHandler%E5%92%8CResponseStatus%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.md)
+
+[SSM整合](https://github.com/LYLYMZGL/note/blob/master/SSM%E6%95%B4%E5%90%88.md)
