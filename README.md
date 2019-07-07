@@ -33,5 +33,5 @@
 
 [SSM整合](https://github.com/LYLYMZGL/note/blob/master/SSM%E6%95%B4%E5%90%88.md)
 
-2、MyBatis<br/>
+# 2、MyBatis<br/>
 [MyBatis配置及入门示例](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%85%A5%E9%97%A8%E7%A4%BA%E4%BE%8B.md)
