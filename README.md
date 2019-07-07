@@ -32,3 +32,6 @@
 [ExceptionHandler和ResponseStatus异常处理](https://github.com/LYLYMZGL/note/blob/master/ExceptionHandler%E5%92%8CResponseStatus%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.md)
 
 [SSM整合](https://github.com/LYLYMZGL/note/blob/master/SSM%E6%95%B4%E5%90%88.md)
+
+2、MyBatis<br/>
+[MyBatis配置及入门示例](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%85%A5%E9%97%A8%E7%A4%BA%E4%BE%8B.md)
