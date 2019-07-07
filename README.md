@@ -36,4 +36,4 @@
 # 2、MyBatis<br/>
 [MyBatis配置及入门示例](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%85%A5%E9%97%A8%E7%A4%BA%E4%BE%8B.md)
 
-(MyBatis-Statement方式的增删改查)[https://github.com/LYLYMZGL/note/blob/master/MyBatis-Statement%E6%96%B9%E5%BC%8F%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.md]
+[MyBatis-Statement方式的增删改查](https://github.com/LYLYMZGL/note/blob/master/MyBatis-Statement%E6%96%B9%E5%BC%8F%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.md)
