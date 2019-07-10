@@ -41,3 +41,5 @@
 [MyBatis约定及基于动态代理方式的增删改查](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E7%BA%A6%E5%AE%9A%E5%8F%8A%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%96%B9%E5%BC%8F%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.md)
 
 [属性文件、全局参数、别名、类型转换器、resultMap](https://github.com/LYLYMZGL/note/blob/master/%E5%B1%9E%E6%80%A7%E6%96%87%E4%BB%B6%E3%80%81%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0%E3%80%81%E5%88%AB%E5%90%8D%E3%80%81%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%99%A8%E3%80%81resultMap.md)
+
+[取值符号以及ParameterType为简单、对象、嵌套对象类型](https://github.com/LYLYMZGL/note/blob/master/%E5%8F%96%E5%80%BC%E7%AC%A6%E5%8F%B7%E4%BB%A5%E5%8F%8AParameterType%E4%B8%BA%E7%AE%80%E5%8D%95%E3%80%81%E5%AF%B9%E8%B1%A1%E3%80%81%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B.md)
