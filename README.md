@@ -43,3 +43,5 @@
 [属性文件、全局参数、别名、类型转换器、resultMap](https://github.com/LYLYMZGL/note/blob/master/%E5%B1%9E%E6%80%A7%E6%96%87%E4%BB%B6%E3%80%81%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0%E3%80%81%E5%88%AB%E5%90%8D%E3%80%81%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%99%A8%E3%80%81resultMap.md)
 
 [取值符号以及ParameterType为简单、对象、嵌套对象类型](https://github.com/LYLYMZGL/note/blob/master/%E5%8F%96%E5%80%BC%E7%AC%A6%E5%8F%B7%E4%BB%A5%E5%8F%8AParameterType%E4%B8%BA%E7%AE%80%E5%8D%95%E3%80%81%E5%AF%B9%E8%B1%A1%E3%80%81%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B.md)
+
+[入参为HashMap、MyBatis调用存储过程执行CRUD](https://github.com/LYLYMZGL/note/blob/master/%E5%85%A5%E5%8F%82%E4%B8%BAHashMap%E3%80%81MyBatis%E8%B0%83%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%89%A7%E8%A1%8CCRUD.md)
