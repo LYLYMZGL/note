@@ -45,3 +45,5 @@
 [取值符号以及ParameterType为简单、对象、嵌套对象类型](https://github.com/LYLYMZGL/note/blob/master/%E5%8F%96%E5%80%BC%E7%AC%A6%E5%8F%B7%E4%BB%A5%E5%8F%8AParameterType%E4%B8%BA%E7%AE%80%E5%8D%95%E3%80%81%E5%AF%B9%E8%B1%A1%E3%80%81%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B.md)
 
 [入参为HashMap、MyBatis调用存储过程执行CRUD](https://github.com/LYLYMZGL/note/blob/master/%E5%85%A5%E5%8F%82%E4%B8%BAHashMap%E3%80%81MyBatis%E8%B0%83%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%89%A7%E8%A1%8CCRUD.md)
+
+[输出参数为简单类型、对象类型、HashMap及resultMap使用](https://github.com/LYLYMZGL/note/blob/master/%E8%BE%93%E5%87%BA%E5%8F%82%E6%95%B0%E4%B8%BA%E7%AE%80%E5%8D%95%E7%B1%BB%E5%9E%8B%E3%80%81%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B%E3%80%81HashMap%E5%8F%8AresultMap%E4%BD%BF%E7%94%A8.md)
