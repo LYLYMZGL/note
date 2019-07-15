@@ -49,3 +49,5 @@
 [输出参数为简单类型、对象类型、HashMap及resultMap使用](https://github.com/LYLYMZGL/note/blob/master/%E8%BE%93%E5%87%BA%E5%8F%82%E6%95%B0%E4%B8%BA%E7%AE%80%E5%8D%95%E7%B1%BB%E5%9E%8B%E3%80%81%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B%E3%80%81HashMap%E5%8F%8AresultMap%E4%BD%BF%E7%94%A8.md)
 
 [动语态SQL、SQL标签、输入参数为集合属性、集合、对象数组](https://github.com/LYLYMZGL/note/blob/master/%E5%8A%A8%E8%AF%AD%E6%80%81SQL%E3%80%81SQL%E6%A0%87%E7%AD%BE%E3%80%81%E8%BE%93%E5%85%A5%E5%8F%82%E6%95%B0%E4%B8%BA%E9%9B%86%E5%90%88%E5%B1%9E%E6%80%A7%E3%80%81%E9%9B%86%E5%90%88%E3%80%81%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84.md)
+
+[一对一关联查询](https://github.com/LYLYMZGL/note/blob/master/%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2.md)
