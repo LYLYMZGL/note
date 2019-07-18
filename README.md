@@ -55,3 +55,5 @@
 [一对一、一对多关联查询](https://github.com/LYLYMZGL/note/blob/master/%E4%B8%80%E5%AF%B9%E4%B8%80%E3%80%81%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2.md)
 
 [MyBatis整合log4j、延迟加载](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E6%95%B4%E5%90%88log4j%E3%80%81%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD.md)
+
+[MyBatis一级缓存、二级缓存](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E3%80%81%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98.md)
