@@ -57,3 +57,5 @@
 [MyBatis整合log4j、延迟加载](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E6%95%B4%E5%90%88log4j%E3%80%81%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD.md)
 
 [MyBatis一级缓存、二级缓存](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E3%80%81%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98.md)
+
+[禁用、清理二级缓存，以及整合Ehcache缓存](https://github.com/LYLYMZGL/note/blob/master/%E7%A6%81%E7%94%A8%E3%80%81%E6%B8%85%E7%90%86%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%95%B4%E5%90%88Ehcache%E7%BC%93%E5%AD%98.md)
