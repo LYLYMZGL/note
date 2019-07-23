@@ -2,7 +2,7 @@ HashMap底层是采用**数组加链表**的方式来实现的。
 
 图示：
 
-![](https://user-gold-cdn.xitu.io/2019/7/23/16c1e2e9f587f2dc?w=512&h=442&f=png&s=51523)
+![hashmap数据结构](https://user-gold-cdn.xitu.io/2019/7/23/16c1e2e9f587f2dc?w=512&h=442&f=png&s=51523)
 
 1）当使用put方法时，通过对Key进行Hash函数运算得到一个Hash值。因为得到的Hash值比较大，为了满足能够得到对应的数组下标，将hash值与数组长度进行取余运算，得到Key对应的数组下标值。
 
