@@ -116,7 +116,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 2）JQuery（推荐）<br>
 # 2  JQuery方式的Ajax-ajax、get、post
 JQuery：推荐<br>
-1、
+1、<br>
 ```jsp
 $.ajax({
         请求方式:get/post,   （或type: get/post）
