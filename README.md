@@ -70,3 +70,6 @@
 [Spring-03](https://github.com/LYLYMZGL/note/blob/master/Spring-03.md)
 
 [SM整合](https://github.com/LYLYMZGL/note/blob/master/SM%E6%95%B4%E5%90%88.md)
+
+# 4、其他
+[HashMap原理](https://github.com/LYLYMZGL/note/blob/master/HashMap%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86.md)
