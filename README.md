@@ -74,4 +74,4 @@
 # 4、其他
 [HashMap原理](https://github.com/LYLYMZGL/note/blob/master/HashMap%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86.md)
 
-[Java内存模型](https://github.com/LYLYMZGL/note/blob/master/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.md)
+[Java内存区域](https://github.com/LYLYMZGL/note/blob/master/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.md)
