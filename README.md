@@ -1,6 +1,9 @@
 该仓库存放技术笔记 <br/>
 目录如下：<br/>
-# 1、SpringMVC
+# 1、Java
+[01-Java语言概述](https://github.com/LYLYMZGL/note/blob/master/01-java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0.md)
+
+# 2、SpringMVC
 [SpringMVC之环境搭建](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
 
 [SpringMVC之RequestMapping映射](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E4%B9%8BRequestMapping%E6%98%A0%E5%B0%84.md)
@@ -33,7 +36,7 @@
 
 [SSM整合](https://github.com/LYLYMZGL/note/blob/master/SSM%E6%95%B4%E5%90%88.md)
 
-# 2、MyBatis<br/>
+# 3、MyBatis<br/>
 [MyBatis配置及入门示例](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%85%A5%E9%97%A8%E7%A4%BA%E4%BE%8B.md)
 
 [MyBatis-Statement方式的增删改查](https://github.com/LYLYMZGL/note/blob/master/MyBatis-Statement%E6%96%B9%E5%BC%8F%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.md)
@@ -62,7 +65,7 @@
 
 [MyBatis逆向工程](https://github.com/LYLYMZGL/note/blob/master/MyBatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B.md)
 
-# 3、Spring<br>
+# 4、Spring<br>
 [Spring-01](https://github.com/LYLYMZGL/note/blob/master/Spring-01.md)
 
 [Spring-02](https://github.com/LYLYMZGL/note/blob/master/Spring-02.md)
@@ -71,7 +74,7 @@
 
 [SM整合](https://github.com/LYLYMZGL/note/blob/master/SM%E6%95%B4%E5%90%88.md)
 
-# 4、其他
+# 5、其他
 [HashMap原理](https://github.com/LYLYMZGL/note/blob/master/HashMap%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86.md)
 
 [Java内存区域](https://github.com/LYLYMZGL/note/blob/master/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.md)
@@ -82,7 +85,7 @@
 
 [Ajax](https://github.com/LYLYMZGL/note/blob/master/Ajax.md)
 
-# 5、SpringBoot
+# 6、SpringBoot
 [SpringBoot 入门](https://github.com/LYLYMZGL/note/blob/master/SpringBoot%20%E5%85%A5%E9%97%A8.md)<br>
 
 [SpringBoot 配置](https://github.com/LYLYMZGL/note/blob/master/SpringBoot%20%E9%85%8D%E7%BD%AE.md)
