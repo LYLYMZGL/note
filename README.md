@@ -3,6 +3,8 @@
 # 1、Java
 [01-Java语言概述](https://github.com/LYLYMZGL/note/blob/master/01-java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0.md)
 
+[02-基本语法](https://github.com/LYLYMZGL/note/blob/master/02-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95.md)
+
 # 2、SpringMVC
 [SpringMVC之环境搭建](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
 
