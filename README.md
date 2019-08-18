@@ -11,6 +11,8 @@
 
 [05-面向对象（三）](https://github.com/LYLYMZGL/note/blob/master/05-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%B8%89%EF%BC%89.md)
 
+[06-异常处理](https://github.com/LYLYMZGL/note/blob/master/06-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.md)
+
 # 2、SpringMVC
 [SpringMVC之环境搭建](https://github.com/LYLYMZGL/note/blob/master/SpringMVC%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
 
