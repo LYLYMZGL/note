@@ -108,3 +108,5 @@
 [算法之数组和链表](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E6%95%B0%E7%BB%84%E5%92%8C%E9%93%BE%E8%A1%A8.md)
 
 [算法之堆栈和队列](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%A0%86%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97.md)
+
+[算法之映射和集合](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88.md)
