@@ -112,3 +112,5 @@
 [算法之映射和集合](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88.md)
 
 [算法之树与图](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E6%A0%91%E4%B8%8E%E5%9B%BE.md)
+
+[算法之贪心算法](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.md)
