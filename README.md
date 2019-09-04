@@ -114,3 +114,5 @@
 [算法之树与图](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E6%A0%91%E4%B8%8E%E5%9B%BE.md)
 
 [算法之贪心算法](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.md)
+
+[算法之递归和分治](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E9%80%92%E5%BD%92%E5%92%8C%E5%88%86%E6%B2%BB.md)
