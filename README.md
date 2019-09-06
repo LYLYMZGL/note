@@ -122,3 +122,5 @@
 [算法之二分查找](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.md)
 
 [算法之字典树](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%AD%97%E5%85%B8%E6%A0%91.md)
+
+[算法之位运算](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E4%BD%8D%E8%BF%90%E7%AE%97.md)
