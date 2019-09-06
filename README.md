@@ -120,3 +120,5 @@
 [算法之剪枝](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%89%AA%E6%9E%9D.md)
 
 [算法之二分查找](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.md)
+
+[算法之字典树](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%AD%97%E5%85%B8%E6%A0%91.md)
