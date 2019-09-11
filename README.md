@@ -124,3 +124,5 @@
 [算法之字典树](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%AD%97%E5%85%B8%E6%A0%91.md)
 
 [算法之位运算](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E4%BD%8D%E8%BF%90%E7%AE%97.md)
+
+[算法之动态规划](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.md)
