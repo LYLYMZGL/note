@@ -104,6 +104,8 @@
 
 [SpringBoot 日志](https://github.com/LYLYMZGL/note/blob/master/SpringBoot%20%E6%97%A5%E5%BF%97.md)
 
+[SpringBoot Web开发](https://github.com/LYLYMZGL/note/blob/master/SpringBoot%20%20Web%E5%BC%80%E5%8F%91.md)
+
 [SpringBoot与Docker](https://github.com/LYLYMZGL/note/blob/master/SpringBoot%E4%B8%8EDocker.md)
 
 # 7、算法
