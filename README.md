@@ -110,6 +110,8 @@
 
 [SpringBoot与数据访问](https://github.com/LYLYMZGL/note/blob/master/SpringBoot%E4%B8%8E%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE.md)
 
+[SpringBoot启动配置原理](https://github.com/LYLYMZGL/note/blob/master/SpringBoot%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86.md)
+
 # 7、算法
 [算法之数组和链表](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E6%95%B0%E7%BB%84%E5%92%8C%E9%93%BE%E8%A1%A8.md)
 
