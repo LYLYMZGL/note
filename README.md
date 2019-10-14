@@ -114,6 +114,8 @@
 
 [自定义starter](https://github.com/LYLYMZGL/note/blob/master/%E8%87%AA%E5%AE%9A%E4%B9%89starter.md)
 
+[SpringBoot 与缓存](https://github.com/LYLYMZGL/note/blob/master/SpringBoot%E4%B8%8E%E7%BC%93%E5%AD%98.md)
+
 # 7、算法
 [算法之数组和链表](https://github.com/LYLYMZGL/note/blob/master/%E7%AE%97%E6%B3%95%E4%B9%8B%E6%95%B0%E7%BB%84%E5%92%8C%E9%93%BE%E8%A1%A8.md)
 
