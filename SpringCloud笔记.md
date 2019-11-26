@@ -296,7 +296,7 @@
 
 项目架构：
 
-![TIM截图20191126141421](img\TIM截图20191126141421.jpg)
+![TIM截图20191126141421](img/TIM截图20191126141421.jpg)
 
 ①创建entity
 
@@ -357,7 +357,7 @@ public class Dept implements Serializable{
 
 项目架构：
 
-![TIM截图20191126141431](img\TIM截图20191126141431.jpg)
+![TIM截图20191126141431](img/TIM截图20191126141431.jpg)
 
 ①pom.xml
 
@@ -678,7 +678,7 @@ public class DeptProvider8001_App {
 
 ⑪运行SpringBoot项目
 
-![TIM截图20191126143001](img\TIM截图20191126143001.jpg)
+![TIM截图20191126143001](img/TIM截图20191126143001.jpg)
 
 使用浏览器访问：http://localhost:8001/dept/get/1
 
@@ -686,7 +686,7 @@ public class DeptProvider8001_App {
 
 项目架构：
 
-![TIM截图20191126152349](img\TIM截图20191126152349.jpg)
+![TIM截图20191126152349](img/TIM截图20191126152349.jpg)
 
 ①pom.xml
 
@@ -860,9 +860,9 @@ Eureka是NetFlix的一个子模块，也是核心模块之一。Eureka是一个�
 
    ​							**SpringCloud与Dubbo对比**
 
-   ![TIM截图20191126154554](img\TIM截图20191126154554.jpg)
+   ![TIM截图20191126154554](img/TIM截图20191126154554.jpg)
 
-   ![TIM截图20191126154616](img\TIM截图20191126154616.jpg)
+   ![TIM截图20191126154616](img/TIM截图20191126154616.jpg)
 
    **Eureka包含两个组件：Eureka Server和Eureka Client**
 
@@ -1002,7 +1002,7 @@ Eureka是NetFlix的一个子模块，也是核心模块之一。Eureka是一个�
 
    先启动EurekaServer，在启动EurekaClient。最后访问http://locahost:7001
 
-   ![TIM截图20191126164613](img\TIM截图20191126164613.jpg)
+   ![TIM截图20191126164613](img/TIM截图20191126164613.jpg)
 
 ### 3、actuator与注册信息完善
 
@@ -1019,7 +1019,7 @@ Eureka是NetFlix的一个子模块，也是核心模块之一。Eureka是一个�
          instance-id: microservicecloud-dept8001 # 自定义服务名称信息
      ```
 
-     ![TIM截图20191126194624](img\TIM截图20191126194624.jpg)
+     ![TIM截图20191126194624](img/TIM截图20191126194624.jpg)
 
 2. 访问信息有IP信息提示
 
@@ -1035,7 +1035,7 @@ Eureka是NetFlix的一个子模块，也是核心模块之一。Eureka是一个�
          prefer-ip-address: true    # 访问路径可以显示IP地址
      ```
 
-     ![TIM截图20191126195442](img\TIM截图20191126195442.jpg)
+     ![TIM截图20191126195442](img/TIM截图20191126195442.jpg)
 
 3. 微服务info内容详细信息
 
@@ -1086,15 +1086,15 @@ Eureka是NetFlix的一个子模块，也是核心模块之一。Eureka是一个�
 
    ④点击status中的链接访问 IP:端口号/info ，显示的就是上一步设置的JSON串。
 
-   ![TIM截图20191126201318](img\TIM截图20191126201318.jpg)
+   ![TIM截图20191126201318](img/TIM截图20191126201318.jpg)
 
 ### 4、Eureka自我保护
 
 1. 故障现象
 
-   ![TIM截图20191126165333](img\TIM截图20191126165333.jpg)
+   ![TIM截图20191126165333](img/TIM截图20191126165333.jpg)
 
-![TIM截图20191126201717](img\TIM截图20191126201717.jpg)
+![TIM截图20191126201717](img/TIM截图20191126201717.jpg)
 
 2. 导致这个现象的原因：某时刻某一个微服务不可用了，Eureka不会立刻清理，依旧会对该微服务的信息进行保存。
 
