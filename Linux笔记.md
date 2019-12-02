@@ -1375,7 +1375,7 @@ tar指令是打包指令，最后打包的文件是.tar.gz的文件。
 
     解压到指定目录的前提是：该目录必须已经存在。
 
-## 7、组管理和权限管理
+## 7、组管理
 
 ### 1）、Linux组基本介绍
 
@@ -1394,9 +1394,28 @@ tar指令是打包指令，最后打包的文件是.tar.gz的文件。
 
 * 指令：ls -ahl
 
-* 应用实例：创建一个组police，在创建一个用户tom，然后使用tom来创建一个文件，看看情况如何。
+* 应用实例：创建一个组police，在创建一个用户tom，将tom放到police组，然后使用tom来创建一个ok.txt文件，看看情况如何。
 
   ```shell
+  [root@localhost ~]# groupadd police
+  [root@localhost ~]# useradd -g police tom
+  [root@localhost ~]# passwd tom
+  更改用户 tom 的密码 。
+  新的 密码：
+  无效的密码： WAY 过短
+  无效的密码： 过于简单
+  重新输入新的 密码：
+  passwd： 所有的身份验证令牌已经成功更新。
+  [root@localhost ~]# su tom
+  [tom@localhost root]$ pwd
+  /root
+  [tom@localhost root]$ cd ~
+  [tom@localhost ~]$ pwd
+  /home/tom
+  [tom@localhost ~]$ touch ok.txt
+  [tom@localhost ~]$ ls -ahl
+  总用量 28K
+  -rw-r--r--. 1 tom  police    0 12月  2 16:29 ok.txt
 
   ```
 
@@ -1407,8 +1426,117 @@ tar指令是打包指令，最后打包的文件是.tar.gz的文件。
 * 应用案例：使用root创建一个文件apple.txt，然后将其所有者修改成tom。
 
   ```shell
-
+  [root@localhost ~]# touch apple.txt
+  [root@localhost ~]# ll
+  总用量 368
+  -rw-r--r--. 1 root root      0 12月  2 16:34 apple.txt
+  [root@localhost ~]# chown tom apple.txt 
+  [root@localhost ~]# ll
+  总用量 368
+  -rw-r--r--. 1 tom  root      0 12月  2 16:34 apple.txt
   ```
 
-  ​
+
+
+#### ③、组的创建
+
+* 基本指令
+
+  ```shell
+  groupadd 组名
+  ```
+
+* 应用案例
+
+  * 创建一个组monster
+
+    ```shell
+    groupadd monster
+    ```
+
+  * 创建一个用户fox，并放入到monster组中
+
+    ```shell
+    useradd -g monster fox
+    ```
+
+### 3）、文件/目录所在组
+
+当某个用户创建了一个文件后，默认这个文件的所在组就是该用户所在的组。
+
+#### ①、查看文件/目录所在组
+
+* 基本指令
+
+  ```shell
+  ls -ahl
+  ```
+
+#### ②、修改文件所在的组
+
+* 基本指令
+
+  ```shell
+  chgrp 组名 文件名
+  ```
+
+* 应用案例
+
+  使用root用户创建文件orange.txt，看看当前这个文件属于哪个组，然后将这个文件所在组，修改到police组。
+
+  ```shell
+  [root@localhost ~]# touch orange.txt
+  [root@localhost ~]# ll
+  总用量 368
+  -rw-r--r--. 1 root root      0 12月  2 16:48 orange.txt
+  [root@localhost ~]# chgrp police orange.txt 
+  [root@localhost ~]# ll
+  总用量 368
+  -rw-r--r--. 1 root police      0 12月  2 16:48 orange.txt
+  ```
+
+### 4）、其他组
+
+除文件的所有者和所在组的用户外，系统的其他用户都是文件的其他组。
+
+### 5）、改变用户所在组
+
+在添加用户时，可以指定将该用户添加到哪个组中，同样的用root的管理权限可以改变某个用户所在的组。
+
+#### ①、改变用户所在组
+
+* 基本语法
+  * usermod -g 组名 用户名
+  * usermod -d 目录名 用户名：改变该用户登录的初始目录。
+
+
+* 应用实例
+
+  创建一个土匪组（bandit）将tom这个用户从原来的police组，修改到bandit（土匪）组。
+
+  ```shell
+  [root@localhost ~]# groupadd bandit
+  [root@localhost ~]# id tom
+  uid=504(tom) gid=505(police) 组=505(police)
+  [root@localhost ~]# usermod -g bandit tom
+  [root@localhost ~]# id tom
+  uid=504(tom) gid=506(bandit) 组=506(bandit)
+  ```
+
+## 8、权限管理
+
+* 基本介绍
+
+  ls -l 中显示的内容如下：
+
+  -rwx**rw**-r--1 root root 1213 Feb 2 09:39 abc
+
+* 0-9位说明
+
+  * 第0位确定文件类型（d，-，l，c，b）
+  * 第1-3位确定所有者（该文件的所有者）拥有该文件的权限。——User
+  * 第4-6位确定所属组（同用户组的）拥有该文件的权限。——Group
+  * 第7-9位确定其他用户拥有该文件的权限。——Other
+
+* 
 
