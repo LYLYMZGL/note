@@ -1732,15 +1732,243 @@ xh, xq: 土匪
 
 (1) 创建组
 
+```shell
+groupadd police
+groupadd bandit
+```
+
 (2) 创建用户
+
+```shell
+useradd -g police jack
+useradd -g police jerry
+useradd -g bandit xh
+useradd -g bandit xq
+
+passwd jack
+passwd jerry
+passwd xh
+passwd xq
+```
 
 (3) jack 创建一个文件，自己可以读写，本组人可以读，其它组没人任何权限
 
+```shell
+touch jack01.txt(创建完成后，文件权限为rw-r--r--)
+chmod 640 jack01.txt
+```
+
 (4) jack 修改该文件，让其它组人可以读, 本组人可以读写
 
-(5) xh 投靠 警察，看看是否可以读写.
+```shell
+chmod 664 jack01.txt
+```
 
+(5) xh 投靠 警察，看看是否可以读写之前创建的文件.
 
+```shell
+[root]usermod -g police xh
+[xh]cd jack/  # 权限不够（jack目录的权限为drwx------）
+[jack]chmod g=rx jack/ # 修改权限后，xh需要重新登录
+[xh]cd jack/ # 成功进入
+[xh]vim jack01.txt # 该文件所在组可以进行读写操作 
+```
 
+## 8、定时任务调度
 
+### 1）、原理示意图
 
+![TIM截图20191205125710](img/TIM截图20191205125710.jpg)
+
+### 2）、crond任务调度
+
+crontab进行定时任务的设置
+
+* 概述
+
+  任务调度：是指系统在某个时间执行的特定的命令或程序。
+
+  * 任务调度分类：
+    * 系统工作：有些重要的工作必须周而复始地执行，如病毒扫描等。
+    * 个别用户工作：个别用户可能希望执行某些程序，比如对mysql数据库的备份。
+
+* 基本语法
+
+  ```shell
+  crontab [选项]
+  ```
+
+* 常用选项
+
+  |  选项  |         功能         |
+  | :--: | :----------------: |
+  |  -e  |   编辑crontab定时任务    |
+  |  -l  |    查询crontab任务     |
+  |  -r  | 删除当前用户所有的crontab任务 |
+
+* 快速入门
+
+  设置任务调度文件：/etc/crontab
+
+  设置个人任务调度：执行crontab -e 命令
+
+  接着输入任务到调度文件，如：*/1 * * * * ls -l  /etc >> /tmp/to.txt命令
+
+  ```shell
+  [root@localhost ~]# crontab -e
+  进入文件后输入*/1 * * * * ls -l  /etc >> /tmp/to.txt 命令，保存并退出
+  no crontab for root - using an empty one
+  crontab: installing new crontab
+  [root@localhost ~]# cd /tmp
+  [root@localhost tmp]# date
+  2019年 12月 05日 星期四 08:36:59 PST
+  [root@localhost tmp]# date
+  2019年 12月 05日 星期四 08:37:01 PST
+  [root@localhost tmp]# ls
+  to.txt 
+  可以查看to.txt中的内容。
+  ```
+
+* 参数细节说明
+
+  * 5个占位符的说明
+
+    |    项目    |     含义      |       范围       |
+    | :------: | :---------: | :------------: |
+    | 第一个“ * ” | 一个小时当中的第几分钟 |      0-59      |
+    | 第二个“ * ” | 一天当中的第几个小时  |      0-23      |
+    | 第三个“ * ” |  一个月当中的第几天  |      1-31      |
+    | 第四个“ * ” |  一年当中的第几月   |      1-12      |
+    | 第五个“ * ” |  一周当中的星期几   | 0-7（0和7都代表星期日） |
+
+  * 特殊符号的说明
+
+    | 特殊符号 |                    含义                    |
+    | :--: | :--------------------------------------: |
+    |  *   |  代表任意时间。比如第一个“ * ”就代表一小时中每分钟都要执行一次的意思。   |
+    |  ,   | 代表不连续的时间。比如“0 8,12,16 * * * ”命令，就代表在每天的8点0分，12点0分，16点0分都执行一次命令。 |
+    |  -   | 代表连续的时间范围。比如“0 5 * * 1-6”命令，代表在周一到周六的凌晨5点0分执行命令 |
+    | */n  | 代表每隔多久执行一次。比如“ */10 * * * * ”命令，代表每隔10分钟就执行一遍命令 |
+
+  * 特定时间执行任务案例
+
+    |       时间        |                    含义                    |
+    | :-------------: | :--------------------------------------: |
+    | 45 22 * * * 命令  |               在22点45分执行命令                |
+    |  0 17 * * 1 命令  |              每周1的17点0分执行命令               |
+    | 0 5 1,15 * * 命令 |           每月1号和15号的凌晨5点0分执行命令            |
+    | 40 4 * * 1-5 命令 |            每周一到周五的凌晨4点40分执行命令            |
+    | */10 4 * * * 命令 |           每天的凌晨4点，每隔10分钟执行一次命令           |
+    | 0 0 1,15 * 1 命令 | 每月的1号和15号，每周1的0点0分都会执行命令。注意：星期几和几号最好不要同时出现，因为它们定义的都是天。非常容易让管理员混乱。 |
+
+* 应用案例
+
+  * 每隔1分钟，就将当前的日期信息，追加到/tmp/mydate文件中
+
+    ```shell
+    1）先编写一个文件 /home/mytask1.sh
+    date >> /tmp/mydate
+    2）给mytask1.sh一个可以执行权限
+    chmod 744 /home/mytask1.sh
+    3）crontab -e
+    4）*/1 * * * * /home/mytask1.sh
+    ```
+
+  * 每隔1分钟，将当前日期和日历都追加到/home/mycal文件中
+
+    ```shell
+    1）先编写一个文件 /home/mytask2.sh
+    date >> /tmp/mycal
+    cal >> /tmp/mycal
+    2）给mytask2.sh一个可以执行权限
+    chmod 744 /home/mytask2.sh
+    3）crontab -e
+    4）*/1 * * * * /home/mytask2.sh
+    ```
+
+  * 每天凌晨2:00将mysql数据库testdb，备份到文件mydb.bak中
+
+    ```shell
+    1）先编写一个文件 /home/mytask3.sh
+    /usr/local/mysql/bin/mysqldump -u root -proot testdb > /tmp/mydb.bak
+    2）给mytask3.sh一个可以执行权限
+    chmod 744 /home/mytask3.sh
+    3）crontab -e
+    4）0 2 * * * /home/mytask3.sh
+    ```
+
+* crond相关指令
+
+  * crontab -r：终止任务调度
+  * crontab -l：列出当前有哪些任务调度
+  * service crond restart ：重启任务调度
+
+## 9、Linux磁盘分区、挂载
+
+### 1）、分区基本知识
+
+* 分区的方式：
+
+  * mbr分区：
+    * 最多支持四个主分区
+    * 系统只能安装在主分区
+    * 扩展分区要占一个主分区
+    * MBR最大只支持2TB，但拥有最好的兼容性
+  * gpt分区：
+    * 支持无限多个主分区（但操作系统可能限制，比如Windows下最多128个分区）
+    * 最大支持18EB的大容量（EB=1024PB，PB=1024TB）
+    * Windows7 64位以后支持gpt
+
+* windows下磁盘分区
+
+  ![TIM截图20191205144048](img/TIM截图20191205144048.jpg)
+
+* xx
+
+### 2）、Linux分区
+
+* 原理介绍
+
+  * Linux来说无论有几个分区，分给哪一目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构，Linux中每个分区都是用来组成整个文件系统的一部分。
+
+  * Linux采用了一种叫“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录，且将一个分区和一个目录联系起来。这时要载入的一个分区将使它的存储空间在一个目录下获得。
+
+  * 示意图：
+
+    ![TIM截图20191205145148](img/TIM截图20191205145148.jpg)
+
+* 硬盘说明
+
+  * Linux硬盘分IDE硬盘和SCSI硬盘，目前基本上是SCSI硬盘
+  * 对于IDE硬盘，驱动器标识符为“hdx~”，其中“hd”表明分区所在设备的类型，这里是指IDE硬盘了。“x”为盘号（a为基本盘，b为基本从属盘，c为辅助主盘，d为辅助从属盘），“~”代表分区，前四个分区用数字1到4表示，它们是主分区或扩展分区，从5开始就是逻辑分区。例，hda3表示为第一个IDE硬盘上的第三个主分区或扩展分区，hdb2表示为第二个IDE硬盘上的第二个主分区或扩展分区。
+  * 对于SCSI磁盘则标识为“sdx~”，SCSI硬盘是用“sd”来表示分区所在设备的类型的，其余则和IDE硬盘的表示方法一样。
+
+* 查看系统分区和挂载情况：
+
+  命令：lsblk 或者 lsblk -f
+
+  ```shell
+  [root@localhost tmp]# lsblk -f
+  NAME   FSTYPE LABEL UUID                                 MOUNTPOINT
+  sda                                                      
+  ├─sda1 ext4         fafc7199-8c97-4b2e-a425-c906ec63ecc4 /boot
+  ├─sda2 ext4         cd7e8dbc-f417-4d6e-88e7-61683240dfd1 /
+  └─sda3 swap         debfdedb-c3d7-46da-932c-f414394e72b4 [SWAP]
+  sr0      
+  [root@localhost tmp]# lsblk
+  NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+  sda      8:0    0   20G  0 disk 
+  ├─sda1   8:1    0  300M  0 part /boot
+  ├─sda2   8:2    0 17.8G  0 part /
+  └─sda3   8:3    0    2G  0 part [SWAP]
+  sr0     11:0    1 1024M  0 rom  
+
+  ```
+
+  ![TIM截图20191205150647](img/TIM截图20191205150647.jpg)
+
+### 3）、挂载的经典案例
+
+* 虚拟机增加硬盘步骤1
+
+  在【虚拟机】菜单中，选择【设置】，然后设备列表里添加硬盘，然后一路【下一步】，中间只有选择磁盘大小的地方需要修改，直到完成。然后重启系统（才能识别）！
