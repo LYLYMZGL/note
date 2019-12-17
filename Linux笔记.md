@@ -1969,6 +1969,490 @@ crontab进行定时任务的设置
 
 ### 3）、挂载的经典案例
 
-* 虚拟机增加硬盘步骤1
+* 需求：给我们的Linux系统增加一个新的硬盘，并且挂载到/home/newdisk目录下。
 
-  在【虚拟机】菜单中，选择【设置】，然后设备列表里添加硬盘，然后一路【下一步】，中间只有选择磁盘大小的地方需要修改，直到完成。然后重启系统（才能识别）！
+  ![TIM截图20191217094150](img/TIM截图20191217094150.jpg)
+
+
+* 如何增加一块硬盘？
+
+  * 虚拟机添加硬盘
+
+    在VMware中点击“虚拟机”--->"设置"，进入如下界面：
+
+    ![TIM截图20191217095613](img/TIM截图20191217095613.jpg)
+
+    ![TIM截图20191217095812](img/TIM截图20191217095812.jpg)
+
+    ![TIM截图20191217095831](img/TIM截图20191217095831.jpg)
+
+    ![TIM截图20191217095851](img/TIM截图20191217095851.jpg)
+
+    ![TIM截图20191217095901](img/TIM截图20191217095901.jpg)
+
+    完成后，点击确定
+
+  * 分区
+
+    ```shell
+    # 使用lsblk -f查看时，并没有看到创建的硬盘。此时，需要重启（reboot）虚拟机才能看到
+    # 重启后，进行以下操作
+    fdisk /dev/sdb 
+    输入m开启帮助
+    输入n添加一个分区
+    	输入p选择主分区
+    	输入编号1
+    	其余直接默认
+    输入w将分区的信息写入硬盘	
+    ```
+
+    ![TIM截图20191217100750](img/TIM截图20191217100750.jpg)
+
+    ![TIM截图20191217100855](img/TIM截图20191217100855.jpg)
+
+    ![TIM截图20191217101053](img/TIM截图20191217101053.jpg)
+
+    ![TIM截图20191217101333](img/TIM截图20191217101333.jpg)
+
+    分区成功后，可以使用 lsblk -f，进行查看
+
+    ![TIM截图20191217101501](img/TIM截图20191217101501.jpg)
+
+  * 格式化
+
+    ```shell
+    mkfs -t ext4 /dev/sdb1
+    # 其中ext4是分区类型
+    ```
+
+    ![TIM截图20191217101707](img/TIM截图20191217101707.jpg)
+
+    格式化成功后，结果为：
+
+    ![TIM截图20191217101812](img/TIM截图20191217101812.jpg)
+
+  * 挂载：将一个分区与一个目录联系起来。
+
+    * mount 设备名称 挂载目录
+    * umount 设备名称 或者 挂载目录
+
+    先创建一个/home/newdisk目录：mkdir /home/newdisk
+
+    挂载：mount  /dev/sdb1  /home/newdisk
+
+    此时，再次查看：
+
+    ![TIM截图20191217102150](img/TIM截图20191217102150.jpg)
+
+  * 设置可以自动挂载(永久挂载，当你重启系统后，仍然可以挂载到/home/newdisk)
+
+    编辑/etc/fstab文件：vim /etc/fstab
+
+    ![TIM截图20191217102500](img/TIM截图20191217102500.jpg)
+
+  添加如下内容：
+
+  ![TIM截图20191217102642](img/TIM截图20191217102642.jpg)
+
+  然后再输入 mount -a 命令自动挂载
+
+### 4）、磁盘情况查询
+
+#### ①查询系统整体磁盘使用情况
+
+* 基本语法
+
+  ```shell
+  df -h
+  ```
+
+* 应用实例
+
+  查询系统整体磁盘使用情况
+
+  ```shell
+  [root@localhost ~]# df -l
+  Filesystem     1K-blocks     Used Available Use% Mounted on
+  /dev/sda2       18208184  3861292  13398924  23% /
+  tmpfs            1015176       80   1015096   1% /dev/shm
+  /dev/sda1         289293    91978    177859  35% /boot
+  vmhgfs-fuse    202376188 92299080 110077108  46% /mnt/hgfs
+  You have new mail in /var/spool/mail/root
+  [root@localhost ~]# df -lh
+  Filesystem      Size  Used Avail Use% Mounted on
+  /dev/sda2        18G  3.7G   13G  23% /
+  tmpfs           992M   80K  992M   1% /dev/shm
+  /dev/sda1       283M   90M  174M  35% /boot
+  vmhgfs-fuse     194G   89G  105G  46% /mnt/hgfs
+
+  ```
+
+#### ②查询指定目录的磁盘占用情况
+
+* 基本语法
+
+  ```shell
+  du -h /目录
+  ```
+
+  查询指定目录的磁盘占用情况，默认为当前目录
+
+  |      选项       |      含义       |
+  | :-----------: | :-----------: |
+  |      -s       |  指定目录占用大小汇总   |
+  |      -h       |     带计量单位     |
+  |      -a       |      含文件      |
+  | --max-depth=1 |     子目录深度     |
+  |      -c       | 列出明细的同时，增加汇总值 |
+
+* 应用实例
+
+  查询 /opt 目录的磁盘占用情况，深度为1
+
+  ```shell
+  [root@localhost ~]# du -ach --max-depth=1 /opt
+  28M	/opt/金庸-射雕英雄传txt精校版.txt
+  214M	/opt/vmware-tools-distrib
+  1.3M	/opt/home
+  1.3M	/opt/tmp
+  69M	/opt/VMwareTools-10.0.5-3228253.tar.gz
+  4.0K	/opt/rh
+  313M	/opt
+  313M	总用量
+
+  ```
+
+#### ③磁盘情况--工作实用指令
+
+* 统计/home文件夹下文件的个数（"^-"代表以-开头的文件，wc代表统计）
+
+  ```shell
+  [root@localhost ~]# ls -l /home | grep "^-" | wc -l
+  0
+  [root@localhost ~]# cd /home
+  [root@localhost home]# ls
+  liang  tom  xm  zf  zwj
+
+  ```
+
+* 统计/home文件夹下目录（d开头）的个数
+
+  ```shell
+  [root@localhost home]# ls -l /home | grep "^d" | wc -l
+  5
+  [root@localhost home]# ls 
+  liang  tom  xm  zf  zwj
+
+  ```
+
+* 统计/home文件夹下文件的个数，包括子文件夹里的（-R选项代表递归）
+
+  ```shell
+  [root@localhost home]# ls -lR /home | grep "^-" | wc -l
+  1
+  ```
+
+* 统计文件夹下目录的个数，包括子文件夹里的
+
+  ```shell
+  [root@localhost home]# ls -lR /home | grep "^d" | wc -l
+  13
+
+  ```
+
+* 以树状显示目录结构
+
+  ```shell
+  [root@localhost home]# tree
+  -bash: tree: command not found
+  [root@localhost home]# yum install tree
+
+  [root@localhost home]# tree
+  .
+  |-- liang
+  |   |-- Desktop
+  |   |-- Documents
+  |   |-- Downloads
+  |   |-- Music
+  |   |-- Pictures
+  |   |-- Public
+  |   |-- Templates
+  |   `-- Videos
+  |-- tom
+  |   `-- ok.txt
+  |-- xm
+  |-- zf
+  `-- zwj
+
+  13 directories, 1 file
+  [root@localhost home]# cd ~
+  [root@localhost ~]# tree /home
+  /home
+  |-- liang
+  |   |-- Desktop
+  |   |-- Documents
+  |   |-- Downloads
+  |   |-- Music
+  |   |-- Pictures
+  |   |-- Public
+  |   |-- Templates
+  |   `-- Videos
+  |-- tom
+  |   `-- ok.txt
+  |-- xm
+  |-- zf
+  `-- zwj
+
+
+  ```
+
+## 10、网络配置
+
+### 1）、Linux网络配置原理图（含虚拟机）
+
+目前我们的网络配置采用的是NAT模式。
+
+![TIM截图20191217150418](img/TIM截图20191217150418.jpg)
+
+### 2)、查看网络IP和网关
+
+* 查看虚拟网络编辑器
+
+  在VMware中选择“编辑”--->“虚拟网络编辑器”，即可查看如下界面：
+
+  ![TIM截图20191217150734](img/TIM截图20191217150734.jpg)
+
+* 修改ip地址
+
+  选中“VMnet8”，修改子网IP即可。如下所示：
+
+  ![TIM截图20191217151056](img/TIM截图20191217151056.jpg)
+
+* 查看网关
+
+  选择虚拟网络编辑器中的VMnet8，选择NAT设置即可查看到网关。如下所示：
+
+  ![TIM截图20191217151432](img/TIM截图20191217151432.jpg)
+
+* 查看Windows环境中的VMnet8网络配置（ipconfig指令）
+
+  1）使用ipconfig命令查看
+
+  2）使用界面查看
+
+  ![TIM截图20191217151955](img/TIM截图20191217151955.jpg)
+
+### 3）、ping测试主机之间网络连通性
+
+* 基本语法
+
+  ```shell
+  ping 目的主机
+  ```
+
+  功能描述：测试当前服务器是否可以连接目的主机。
+
+* 应用实例
+
+  测试当前服务器是否可以连接百度	
+
+  ```shell
+  ping www.baidu.com
+  ```
+
+### 4）、Linux网络环境配置
+
+* 第一种方法：自动获取
+
+  说明：登陆后，通过界面来设置自动获取ip。
+
+  特点：Linux启动后会自动获取IP，缺点是每次自动获取的ip地址可能不一样。
+
+  选择系统-->首选项-->网络连接，在点击编辑-->勾选自动连接-->应用即可。
+
+  ![TIM截图20191217153204](img/TIM截图20191217153204.jpg)
+
+  ![TIM截图20191217153507](img/TIM截图20191217153507.jpg)
+
+* 第二种方法：指定固定的ip
+
+  说明：直接修改配置文件来指定ip，并可以连接到外网（推荐），编辑/etc/sysconfig/network-scripts/ifcfg-eth0。
+
+  要求：将ip地址配置成静态的，ip地址为192.168.184.130。
+
+  ```shell
+  vim /etc/sysconfig/network-scripts/ifcfg-eth0 # 修改如下选项
+  ```
+
+  ![TIM截图20191217155707](img/TIM截图20191217155707.jpg)
+
+```shell
+[root@localhost 桌面]# service network restart          重启服务
+正在关闭接口 eth0： 设备状态：3 （断开连接）
+                                                           [确定]
+关闭环回接口：                                             [确定]
+弹出环回接口：                                             [确定]
+弹出界面 eth0： 活跃连接状态：激活中
+活跃连接路径：/org/freedesktop/NetworkManager/ActiveConnection/6
+状态：已激活
+连接被激活
+                                                           [确定]
+[root@localhost 桌面]# ifconfig                           查看ip是否为修改后的ip地址
+[root@localhost 桌面]# ping  www.baidu.com                查看是否能够连接外网
+```
+
+## 11、进程管理
+
+### 1）、基本介绍
+
+* 在Linux中，每个执行的程序都称为一个进程。每一个进程都分配一个ID号。
+* 每一个进程，都会对应一个父进程，而这个父进程可以复制多个子进程。例如www服务器。
+* 每个进程都可能以两种方式存在。前台与后台，所谓前台进程指的就是用户目前的屏幕上可以进行操作的。后台进程则是实际在操作，但由于屏幕上无法看到的进程，通常使用后台方式执行。
+* 一般系统的服务都是以后台进程的方式存在，而且都会常驻在系统中。直到关机才结束。
+
+### 2）、显示系统执行的进程
+
+* 基本介绍
+
+  ps命令是用来查看目前系统中，有哪些正在执行，以及它们执行的状况。可以不加任何参数。
+
+  ![TIM截图20191217162110](img/TIM截图20191217162110.jpg)
+
+  ps  -a：显示当前终端的所有进程信息
+
+  ps  -u：以用户的格式显示进程信息
+
+  ps  -x：显示后台进程运行的参数
+
+* 基本语法
+
+  ```shell
+  ps -aux
+  ```
+
+  ![TIM截图20191217162954](img/TIM截图20191217162954.jpg)
+
+  ​	![TIM截图20191217163147](img/TIM截图20191217163147.jpg)
+
+* 应用实例
+
+  以全格式显示当前所有的进程，查看进程的父进程
+
+  * ps -ef 是以全格式显示当前所有的进程
+
+  * -e 显示所有进程；-f 全格式。
+
+    ![TIM截图20191217163830](img/TIM截图20191217163830.jpg)
+
+### 3）、终止进程kill和killall
+
+* 介绍：
+
+  若是某个进程执行一半需要停止时，或是消耗了很大的系统资源时，此时可以考虑停止该进程。使用kill命令来完成此项任务。
+
+* 基本语法：
+
+  ```shell
+  kill [选项] 进程号    # 功能描述：通过进程号杀死进程
+  killall 进程名称	  # 功能描述：通过进程名称杀死进程，也支持通配符，这在系统因负载过大而变得很慢时很有用
+  ```
+
+* 常用选项
+
+  -9：表示强迫进程立即停止
+
+* 应用案例
+
+  * 踢掉某个非法登录用户
+
+    ```shell
+    [root@localhost ~]# ps -aux | grep sshd
+    Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
+    root       1990  0.0  0.1  66352  2644 ?        Ss   04:21   0:00 /usr/sbin/sshd
+    root       6800  0.0  0.3 102196  6416 ?        Ss   08:56   0:00 sshd: root@pts/3 
+    root       7243  0.1  0.3 102196  6524 ?        Ss   11:38   0:00 sshd: root@pts/1 
+    root       7318  0.2  0.3 102196  6428 ?        Ss   11:41   0:00 sshd: zwj [priv] 
+    zwj        7322  0.0  0.1 102196  3328 ?        S    11:41   0:00 sshd: zwj@pts/2  
+    root       7345  0.0  0.1 103408  2156 pts/1    S+   11:42   0:00 grep sshd
+    [root@localhost ~]# kill 7322
+
+    ```
+
+  * 终止远程登录服务sshd，在适当时候再次重启sshd服务
+
+    ```shell
+    [root@localhost ~]# kill 1990
+    ```
+
+  * 终止多个gedit编辑器
+
+    ```shell
+    [root@localhost ~]# killall gedit
+    ```
+
+  * 强制杀掉一个终端
+
+    ```shell
+    [root@localhost ~]# ps -aux | grep bash
+    Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
+    root       6787  0.0  0.1 108420  3200 pts/0    Ss+  08:55   0:00 /bin/bash
+    root       6804  0.0  0.1 108420  3224 pts/3    Ss+  08:56   0:00 -bash
+    root       7247  0.0  0.1 108420  3232 pts/1    Ss   11:38   0:00 -bash
+    root       7351  0.0  0.1 103408  2136 pts/1    S+   11:49   0:00 grep bash
+    [root@localhost ~]# kill -9 6787  需要强制删除，若不加-9参数，则该指令会被忽略
+    ```
+
+### 4）、查看进程树pstree
+
+* 基本语法
+
+  ```shell
+  pstree [选项]      # 可以更加直观的来看进程信息
+  ```
+
+* 常用选项
+
+  * -p：显示进程的PID
+  * -u：显示进程的所属用户
+
+* 应用实例
+
+  * 请你以树状的形式显示进程的PID
+
+    ```shell
+    pstree -p
+    ```
+
+  * 请你以树状的形式显示进程的用户
+
+    ```shell
+    pstree -u
+    ```
+
+### 5）、服务(service)管理
+
+* 介绍
+
+  服务（service）本质就是进程，但是是运行在后台的，通常都会监听某个端口，等待其他程序的请求，比如mysql，sshd，防火墙等，因此我们又称为守护进程，是Linux中非常重要的知识点。
+
+* service管理命令
+
+  ```shell
+  service 服务名 start | stop | restart | reload | status
+  systemctl
+  ```
+
+* 应用案例
+
+  查看当前防火墙的状况，关闭防火墙和重启防火墙。
+
+  ```shell
+
+  ```
+
+* 细节
+
+  * 关闭或者启动防火墙后，立即生效。【telnet 测试 某个端口即可】
+  * 这种方式只是临时生效，当重启系统后，还是回归以前对服务的设置
+  * 如果希望设置某个服务自启动或关闭永久生效，要使用chkconfig指令
+
