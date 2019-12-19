@@ -1,4 +1,4 @@
-一、Linux基础
+# 一、Linux基础
 
 ## 1、安装VMWare12
 
@@ -2202,6 +2202,7 @@ crontab进行定时任务的设置
   |-- xm
   |-- zf
   `-- zwj
+  ```
 
 
   ```
@@ -2431,28 +2432,624 @@ crontab进行定时任务的设置
 
 ### 5）、服务(service)管理
 
-* 介绍
+#### ①介绍
 
-  服务（service）本质就是进程，但是是运行在后台的，通常都会监听某个端口，等待其他程序的请求，比如mysql，sshd，防火墙等，因此我们又称为守护进程，是Linux中非常重要的知识点。
+服务（service）本质就是进程，但是是运行在后台的，通常都会监听某个端口，等待其他程序的请求，比如mysql，sshd，防火墙等，因此我们又称为守护进程，是Linux中非常重要的知识点。
 
-* service管理命令
+![TIM截图20191218152545](img/TIM截图20191218152545.jpg)
 
-  ```shell
-  service 服务名 start | stop | restart | reload | status
-  systemctl
-  ```
+#### ②service管理命令
 
+```shell
+service 服务名 [start | stop | restart | reload | status]
+# 在CentOS 7 后，不在使用service，而是systemctl
+```
 * 应用案例
 
   查看当前防火墙的状况，关闭防火墙和重启防火墙。
 
   ```shell
+  [root@localhost ~]# service iptables status  
+  表格：filter
+  Chain INPUT (policy ACCEPT)
+  num  target     prot opt source               destination         
+  1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED 
+  2    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           
+  3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+  4    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22 
+  5    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited 
 
+  Chain FORWARD (policy ACCEPT)
+  num  target     prot opt source               destination         
+  1    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited 
+
+  Chain OUTPUT (policy ACCEPT)
+  num  target     prot opt source               destination         
+  [root@localhost ~]# service iptables stop  
+  [root@localhost ~]# service iptables start 
   ```
 
 * 细节
 
-  * 关闭或者启动防火墙后，立即生效。【telnet 测试 某个端口即可】
+  * 关闭或者启动防火墙后，立即生效。【如果想要知道Linux的某个端口是否在监听，并且可以访问。可以通过[telnet Linux的ip地址 端口号]命令来检测】
   * 这种方式只是临时生效，当重启系统后，还是回归以前对服务的设置
   * 如果希望设置某个服务自启动或关闭永久生效，要使用chkconfig指令
+
+#### ③查看服务名
+
+  * 方式一：使用【setup命令 --> 系统服务】 就可以看到
+
+    ![TIM截图20191218154922](img/TIM截图20191218154922.jpg)
+
+  * 方式二：/etc/init.d/服务名称
+
+    ```shell
+    [root@localhost ~]# ls -l /etc/init.d/
+    总用量 368
+    -rwxr-xr-x. 1 root root  4621 4月   9 2019 sshd
+
+    ```
+
+#### ④服务的运行级别
+
+  ![TIM截图20191218155250](img/TIM截图20191218155250.jpg)
+
+#### ⑤chkconfig指令
+
+* 介绍
+
+  通过chkconfig命令可以给每个服务的各个运行级别设置自启动/关闭
+
+* 基本语法
+
+  * 查看所有服务：【chkconfig  --list | grep xxx 】
+
+    ```shell
+    [root@localhost ~]# chkconfig --list   	查看所有服务
+
+    [root@localhost ~]# chkconfig --list | grep sshd    查看单个服务
+    sshd           	0:关闭	1:关闭	2:启用	3:启用	4:启用	5:启用	6:关闭
+
+    ```
+
+  * 指定查看某个服务的状态：chkconfig  服务名 --list
+
+    ```shell
+    [root@localhost ~]# chkconfig iptables --list
+    iptables       	0:关闭	1:关闭	2:启用	3:启用	4:启用	5:启用	6:关闭
+    You have new mail in /var/spool/mail/root
+
+    ```
+
+  * 给某个服务的运行级别设置自启动/关闭：chkconfig  --level  5  服务名  on/off
+
+    ```shell
+    chkconfig --level 5 sshd off
+    ```
+
+* 应用实例
+
+  * 请显示当前系统所有服务的各个运行级别的运行状态
+
+    ```shell
+    chkconfig --list
+    ```
+
+  * 请查看sshd服务的运行状态
+
+    ```shell
+    service sshd status
+    ```
+
+  * 将sshd服务在运行级别5下设置为不自动启动
+
+    ```shell
+    chkconfig --level 5 sshd off
+    ```
+
+  * 在运行级别为5时，关闭防火墙
+
+    ```shell
+    chkconfig --level 5 iptables off
+    ```
+
+  * 在所有运行级别下，关闭防火墙
+
+    ```shell
+    chkconfig iptables off
+    ```
+
+  * 在所有运行级别下，开启防火墙
+
+    ```shell
+    chkconfig iptables on
+    ```
+
+* 使用细节
+
+  chkconfig重新设置服务后自启动或关闭，需要重启机器reboot才能生效。
+
+### 6）、动态监控进程
+
+#### ①介绍
+
+top与ps命令很相似。它们都用来显示正在执行的进程。top与ps最大的不同之处，在于top在执行一段时间后，可以更新正在运行的进程。
+
+#### ②基本语法
+
+```shell
+top [选项]
+```
+
+#### ③选项说明
+
+|  选项   |                    功能                    |
+| :---: | :--------------------------------------: |
+| -d 秒数 | 指定top指令每隔几秒更新。默认是3秒在top命令的交互模式当中可以执行的命令。 |
+|  -i   |            使top不显示任何闲置或者僵死进程             |
+|  -p   |           通过指定监控进程ID来监控某个进程的状态           |
+
+#### ④交互操作说明
+
+|  操作  |        功能        |
+| :--: | :--------------: |
+|  P   | 以CPU使用率排序，默认就是此项 |
+|  M   |    以内存的使用率排序     |
+|  N   |      以PID排序      |
+|  q   |      退出top       |
+
+#### ⑤应用实例
+
+* 监视特定用户
+
+  top：输入此命令，按回车键，查看执行的进程。
+
+  u：然后输入u回车，在输入用户名，即可。
+
+  ![TIM截图20191218164822](img/TIM截图20191218164822.jpg)
+
+* 终止指定的进程
+
+  top：输入此命令，按回车键，查看执行的进程。
+
+  k：然后输入k回车，在输入要结束的进程ID号。
+
+* 指定系统状态更新的时间（每隔10秒自动更新，默认是3秒）
+
+  ```shell
+  top -d 10
+  ```
+
+### 7）、监控网络状态
+
+#### ①查看系统网络情况netstat
+
+* 基本语法
+
+  ```shell
+  netstat [选项]
+  netstat -anp
+  ```
+
+* 选项说明
+
+  * -an：按一定顺序排列输出
+  * -p：显示哪个进程在调用
+
+* 应用案例
+
+  查看系统所有的网络服务
+
+  ```shell
+  [root@localhost ~]# netstat -anp | more
+  ```
+
+  查看服务名为sshd的服务的信息
+
+  ```shell
+  [root@localhost ~]# netstat -anp | grep sshd
+  tcp        0      0 127.0.0.1:6010              0.0.0.0:*                   LISTEN      2759/sshd           
+  tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      1941/sshd           
+  tcp        0     64 192.168.224.132:22          192.168.224.1:64613         ESTABLISHED 2759/sshd           
+  tcp        0      0 ::1:6010                    :::*                        LISTEN      2759/sshd           
+  tcp        0      0 :::22                       :::*                        LISTEN      1941/sshd           
+  unix  2      [ ]         DGRAM                    23598  2759/sshd           
+
+  ```
+
+#### ②检测主机连接命令ping
+
+是一种网络连接检测工具，它主要是用检测远程主机是否正常，或是两部主机间的介质是否为断、网线是否脱落或网卡故障。
+
+如：ping 对方IP地址
+
+## 12、RPM和YUM的管理
+
+### 1）、rpm包的管理
+
+#### ①介绍
+
+一种用于互联网下载包的打包及安装工具，它包含在某些Linux分发版中。它生成具有.RPM扩展名的文件。RPM是RedHat Package Manager（RedHat软件包管理工具）的缩写，类似Windows的setup.exe，这一文件格式名称虽然打上了RedHat的标志，但是理念是通用的。
+
+Linux的分发版都有采用（suse,redhat,centos等等），可以算是公认的行业标准了。
+
+#### ②rpm包的简单查询指令
+
+查询已安装的rpm列表：rpm  -qa | grep 包名
+
+```shell
+[root@localhost ~]# rpm -qa | grep firefox
+firefox-60.8.0-1.el6.centos.x86_64
+
+```
+
+![TIM截图20191218171911](img/TIM截图20191218171911.jpg)
+
+#### ③rpm包名基本格式
+
+一个rpm包名：firefox-45.0.1-1.el6.centos.x86_64.rpm
+
+名称：firefox
+
+版本号：45.0.1-1
+
+适用操作系统：el6.centos.x86_64，表示CentOS 6.x的64位系统，如果是i686、i386表示32位系统，noarch表示通用。
+
+#### ④rpm包的其他查询指令
+
+* rpm -qa :查询所安装的所有rpm软件包
+  * rpm -qa | more ：分页显示
+  * rpm -qa | grep X [例如：rpm -qa | grep firefox ]
+* rpm -q 软件包名 :查询软件包是否安装
+  * rpm -q firefox
+* rpm -qi 软件包名 ：查询软件包信息
+  * rpm -qi firefox
+* rpm -ql 软件包名 :查询软件包中的文件
+  * rpm -ql firefox
+* rpm -qf 文件全路径名 查询文件所属的软件包
+  * rpm -qf /etc/passwd
+  * rpm -qf /root/install.log
+
+#### ⑤卸载rpm包
+
+* 基本语法
+
+  ```shell
+  rpm -e RPM包的名称
+  ```
+
+* 应用案例
+
+  删除Firefox软件包
+
+  ```shell
+  rpm -e firefox
+  ```
+
+* 细节讨论
+
+  * 如果其他软件包依赖于要卸载的软件包，卸载时则会产生错误信息。如：rpm -e foo
+  * 如果我们就是要删除foo这个rpm包，可以增加参数--nodeps，就可以强制删除，但是一般不推荐这样做，因为这样依赖于该软件包的程序可能无法运行。如：rpm -e --nodeps foo
+
+#### ⑥安装rpm包
+
+* 基本语法
+
+  ```shell
+  rpm -ivh RPM包全路径名称
+  ```
+
+* 参数说明
+
+  i=install 安装
+
+  v=verbose 提示
+
+  h=hash 进度条
+
+* 应用案例
+
+  演示安装Firefox浏览器
+
+  ```shell
+  # 步骤先找到 firefox 的安装 rpm 包,你需要挂载上我们安装 centos 的 iso 文件，然后到/media/下去 找 rpm 找。
+  [root@localhost Packages]# ll firefox-17.0.10-1.el6.centos.x86_64.rpm
+  -r--r--r--. 2 root root 26372848 10月 29 2013 firefox-17.0.10-1.el6.centos.x86_64.rpm
+  [root@localhost Packages]# cp firefox-17.0.10-1.el6.centos.x86_64.rpm /opt
+  [root@localhost Packages]# cd /opt/
+  [root@localhost opt]rpm -ivh firefox-17.0.10-1.el6.centos.x86_64.rpm
+  ```
+
+### 2）、yum
+
+#### ①介绍
+
+Yum 是一个 Shell 前端软件包管理器。基于 RPM 包管理，能够从指定的服务器自动下载 RPM 包
+并且安装，可以**自动处理依赖性关系**，并且一次安装所有依赖的软件包。使用 yum 的前提是可以联
+网。
+
+![TIM截图20191218180943](img/TIM截图20191218180943.jpg)
+
+#### ②yum的基本指令
+
+* 查询 yum 服务器是否有需要安装的软件
+
+  ```shell
+  yum list|grep xx 
+  ```
+
+* 安装指定的 yum 包
+
+  ```shell
+  yum install xxx 
+  ```
+
+
+
+#### ③应用实例
+
+请使用 yum 的方式来安装 firefox
+
+```shell
+[root@localhost ~]# yum list | grep firefox
+firefox.x86_64                            60.8.0-1.el6.centos            @updates
+firefox.i686                              68.3.0-1.el6.centos            updates
+firefox.x86_64                            68.3.0-1.el6.centos            updates
+firefox-noscript.noarch                   11.0.3-3.el6                   epel   
+[root@localhost ~]# yum install firefox
+
+```
+
+# 三、搭建JavaEE环境
+
+如果需要在Linux下进行JavaEE的开发，我们需要安装MySQL、JDK、Tomcat、eclipse。
+
+![TIM截图20191219125245](img/TIM截图20191219125245.jpg)
+
+## 1、JDK安装和配置
+
+### 1）、安装步骤
+
+1. 现将软件通过xftp上传到 /opt 下
+
+2. 解压缩到/opt
+
+   ```shell
+   [root@localhost opt]# ls
+   apache-tomcat-7.0.70.tar.gz                 home         jdk-7u79-linux-x64.gz  rh   VMwareTools-10.0.5-3228253.tar.gz  金庸-射雕英雄传txt精校版.txt
+   eclipse-jee-mars-2-linux-gtk-x86_64.tar.gz  jdk1.7.0_79  mysql-5.6.14.tar.gz    tmp  vmware-tools-distrib
+   [root@localhost opt]# tar -zxvf jdk-7u79-linux-x64.gz 
+
+   ```
+
+3. 配置环境变量的配置文件 vim /etc/profile  
+
+   ```shell
+   在文件末尾添加以下内容：
+   JAVA_HOME=/opt/jdk1.7.0_79
+   PATH=/opt/jdk1.7.0_79/bin:$PATH
+   export JAVA_HOME PATH
+   ```
+
+   ![TIM截图20191219131529](img/TIM截图20191219131529.jpg)
+
+4. 需要注销用户，环境变量才能生效
+
+   如果是在运行级别3，则直接logout；
+
+   如果是在运行级别5，直接图形化界面操作注销用户即可。
+
+5. 在任何目录下都可以使用 java 和 javac 命令。
+
+### 2）、测试是否安装成功
+
+编写一个简单的Hello.java，输出“hello,world!”
+
+```shell
+[root@localhost ~]# cd /opt
+[root@localhost opt]# vim Hello.java
+# Hello.java文件内容：
+public class Hello{
+        public static void main(String[] args){
+                System.out.println("hello,world!");
+        }
+}
+[root@localhost opt]# javac Hello.java 
+[root@localhost opt]# ls
+Hello.java   Hello.class      jdk1.7.0_79  
+[root@localhost opt]# java Hello
+hello,world!
+```
+
+## 2、Tomcat安装和配置
+
+### 1）、步骤
+
+1. 解压缩到/opt
+
+   ````shell
+   [root@localhost opt]# tar -zxvf apache-tomcat-7.0.70.tar.gz 
+   ````
+
+2. 启动Tomcat  
+
+   ```shell
+   [root@localhost opt]# ls
+   apache-tomcat-7.0.70                        Hello.class  jdk1.7.0_79            rh                                 vmware-tools-distrib
+   apache-tomcat-7.0.70.tar.gz                 Hello.java   jdk-7u79-linux-x64.gz  tmp                                金庸-射雕英雄传txt精校版.txt
+   eclipse-jee-mars-2-linux-gtk-x86_64.tar.gz  home         mysql-5.6.14.tar.gz    VMwareTools-10.0.5-3228253.tar.gz
+   [root@localhost opt]# cd apache-tomcat-7.0.70/bin
+   [root@localhost bin]# pwd
+   /opt/apache-tomcat-7.0.70/bin
+   [root@localhost bin]# ./startup.sh 
+   Using CATALINA_BASE:   /opt/apache-tomcat-7.0.70
+   Using CATALINA_HOME:   /opt/apache-tomcat-7.0.70
+   Using CATALINA_TMPDIR: /opt/apache-tomcat-7.0.70/temp
+   Using JRE_HOME:        /opt/jdk1.7.0_79
+   Using CLASSPATH:       /opt/apache-tomcat-7.0.70/bin/bootstrap.jar:/opt/apache-tomcat-7.0.70/bin/tomcat-juli.jar
+   Tomcat started.
+
+   ```
+
+3. 编辑/etc/sysconfig/iptables文件，让防火墙开放8080端口，这样外网才能访问到Tomcat  
+
+   ```shell
+   # 在/etc/sysconfig/iptables文件中添加如下内容：
+   -A INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+
+   ```
+
+4. 重启防火墙才能生效，最后使用浏览器访问即可。
+
+   ```shell
+   [root@localhost bin]# service iptables restart
+   iptables：将链设置为政策 ACCEPT：filter                    [确定]
+   iptables：清除防火墙规则：                                 [确定]
+   iptables：正在卸载模块：                                   [确定]
+   iptables：应用防火墙规则：                                 [确定]
+   [root@localhost bin]# service iptables status
+   表格：filter
+   Chain INPUT (policy ACCEPT)
+   num  target     prot opt source               destination         
+   1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED 
+   2    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           
+   3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+   4    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:8080 
+   5    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22 
+   6    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited 
+
+   Chain FORWARD (policy ACCEPT)
+   num  target     prot opt source               destination         
+   1    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited 
+
+   Chain OUTPUT (policy ACCEPT)
+   num  target     prot opt source               destination         
+
+   ```
+
+### 2）、测试是否安装成功
+
+在Linux下访问http://localhost:8080 ：
+
+![TIM截图20191219133727](img/TIM截图20191219133727.jpg)
+
+在Windows下访问 http://linuxip:8080
+
+![TIM截图20191219134939](img/TIM截图20191219134939.jpg)
+
+## 3、Eclipse安装和配置
+
+### 1）、步骤
+
+1. 解压缩到/opt
+
+   ```shell
+   [root@localhost opt]# tar -zxvf eclipse-jee-mars-2-linux-gtk-x86_64.tar.gz 
+   [root@localhost opt]# ls
+   eclipse-jee-mars-2-linux-gtk-x86_64.tar.gz  eclipse
+
+
+   ```
+
+2. 启动eclipse，配置jre和server（与Windows中一致）
+
+   * 启动方式：
+   * 1、在图形化界面中，进入/opt/eclipse/目录下，为eclipse创建链接，并将快捷方式剪切到桌面，然后双击运行即可
+   * 2、在终端中，进入/opt/eclipse/目录下，运行./eclipse命令，启动eclipse。
+
+3. 编写JSP页面，并测试成功。
+
+   ![TIM截图20191219143332](img/TIM截图20191219143332.jpg)
+
+## 4、MySQL安装和配置
+
+```txt
+CentOS 6.8下编译安装MySQL 5.6.14
+
+概述：
+通过源代码安装高版本的5.6.14。
+
+正文：
+一：卸载旧版本
+
+使用下面的命令检查是否安装有MySQL Server
+
+rpm -qa | grep mysql
+有的话通过下面的命令来卸载掉
+目前我们查询到的是这样的：
+[root@hsp ~]# rpm -qa | grep mysql
+mysql-libs-5.1.73-7.el6.x86_64
+如果查询到了，就删除吧
+
+rpm -e mysql_libs   //普通删除模式
+rpm -e --nodeps mysql_libs    // 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除
+二：安装MySQL
+
+安装编译代码需要的包
+
+yum -y install make gcc-c++ cmake bison-devel  ncurses-devel
+下载MySQL 5.6.14 【这里我们已经下载好了,看软件文件夹】
+
+tar xvf mysql-5.6.14.tar.gz
+cd mysql-5.6.14
+编译安装[源码=》编译]
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/usr/local/mysql/data -DSYSCONFDIR=/etc -DWITH_MYISAM_STORAGE_ENGINE=1 -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_MEMORY_STORAGE_ENGINE=1 -DWITH_READLINE=1 -DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock -DMYSQL_TCP_PORT=3306 -DENABLED_LOCAL_INFILE=1 -DWITH_PARTITION_STORAGE_ENGINE=1 -DEXTRA_CHARSETS=all -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci
+
+编译并安装
+make && make install
+
+整个过程需要30分钟左右……漫长的等待
+
+三：配置MySQL
+
+设置权限
+
+使用下面的命令查看是否有mysql用户及用户组
+
+cat /etc/passwd 查看用户列表
+cat /etc/group  查看用户组列表
+如果没有就创建
+
+groupadd mysql
+useradd -g mysql mysql
+修改/usr/local/mysql权限
+chown -R mysql:mysql /usr/local/mysql
+
+初始化配置，进入安装路径（在执行下面的指令），执行初始化配置脚本，创建系统自带的数据库和表
+cd /usr/local/mysql
+scripts/mysql_install_db --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --user=mysql    [这是一条指令]
+注：在启动MySQL服务时，会按照一定次序搜索my.cnf，先在/etc目录下找，找不到则会搜索"$basedir/my.cnf"，在本例中就是 /usr/local/mysql/my.cnf，这是新版MySQL的配置文件的默认位置！
+
+注意：在CentOS 6.8版操作系统的最小安装完成后，在/etc目录下会存在一个my.cnf，需要将此文件更名为其他的名字，如：/etc/my.cnf.bak，否则，该文件会干扰源码安装的MySQL的正确配置，造成无法启动。
+修改名称，防止干扰：
+mv /etc/my.cnf /etc/my.cnf.bak
+
+启动MySQL
+添加服务，拷贝服务脚本到init.d目录，并设置开机启动 
+[注意在 /usr/local/mysql 下执行]
+cp support-files/mysql.server /etc/init.d/mysql
+chkconfig mysql on
+service mysql start  --启动MySQL
+
+执行下面的命令修改root密码
+cd /usr/local/mysql/bin
+./mysql -uroot  
+mysql> SET PASSWORD = PASSWORD('root');
+
+简单使用：
+创建一个数据库 DB1
+创建一张表 user
+添加一个用户，如果成功，说明我们的数据库就安装成功了！
+
+
+```
+
+
+
+
+
+
+
+
 
